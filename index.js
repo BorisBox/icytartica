@@ -12,6 +12,7 @@ app.get('/', (req, res) => {
 
 var correct_answers = [];
 var turn = 0;
+var participants = [];
 
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -29,6 +30,13 @@ app.use(function(req, res, next) {
 app.post('/listener', (req, res) => {
     console.log('Received Webhook');
     var parsed = req.body;
+    if (parsed.mode == "participant") {
+        participants.push(parsed.content)
+        res.send("Participant" + parsed.content + "added!")
+        if (participants.indexOf("boris") > -1 && participants.indexOf("antonina") > -1 && participants.indexOf("felix") > -1 && participants.indexOf("juan") > -1 && participants.indexOf("kelly") > -1) {
+            res.send("game_start")
+        }
+    }
     if (parsed.mode == "correct_answers") {
         correct_answers = parsed.content.split(",");
         console.log("Received correct answers!")
