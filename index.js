@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 
 app.post('/listener', (req, res) => {
     console.log('Received Webhook');
-    var parsed = JSON.parse(req.body);
+    var parsed = req.body;
     if (parsed.mode == "correct_answers") {
         console.log(parsed.content.split(""));
     }
