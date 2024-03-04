@@ -21,9 +21,9 @@ app.post('/listener', (req, res) => {
     }
     if (parsed.mode == "guess") {
         if (parsed.content == correct_answers[turn]) {
-            res.type('text').send("correct")
+            res.send("correct")
         } else {
-            res.type('text').send("incorrect")
+            res.send("incorrect")
         }
     }
     if (parsed.mode == "turn") {
