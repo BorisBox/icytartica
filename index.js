@@ -14,7 +14,7 @@ app.post('/listener', (req, res) => {
     console.log('Received Webhook');
     var parsed = JSON.parse(req.body);
     if (parsed.mode == "correct_answers") {
-        console.log(parsed.content);
+        console.log(parsed.content.split(""));
     }
     res.status(200).send('OK');
 });
