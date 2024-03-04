@@ -10,11 +10,17 @@ app.get('/', (req, res) => {
     res.send('All good :)');
 });
 
-app.post('/webhook', (req, res) => {
-    console.log('Received Webhook:', req.body);
+app.post('/listener', (req, res) => {
+    console.log('Received Webhook');
+    var parsed = JSON.parse(req.body);
+    if (parsed.mode == "correct_answers") {
+        console.log(parsed.content);
+    }
     res.status(200).send('OK');
 });
 
 app.listen(PORT, () => {
     console.log(`Webhook receiver listening on port ${PORT}`);
 });
+
+
