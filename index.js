@@ -17,7 +17,8 @@ app.post('/listener', (req, res) => {
     console.log('Received Webhook');
     var parsed = req.body;
     if (parsed.mode == "correct_answers") {
-        correct_answers = parsed.content.split("");
+        correct_answers = parsed.content.split(",");
+        console.log("Received correct answers!")
     }
     if (parsed.mode == "guess") {
         if (parsed.content == correct_answers[turn]) {
