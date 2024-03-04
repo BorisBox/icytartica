@@ -13,6 +13,19 @@ app.get('/', (req, res) => {
 var correct_answers = [];
 var turn = 0;
 
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    // handle OPTIONS method
+    if (req.method == 'OPTIONS') {
+        return res.sendStatus(200);
+    } else {
+        next();
+    }
+});
+
 app.post('/listener', (req, res) => {
     console.log('Received Webhook');
     var parsed = req.body;
