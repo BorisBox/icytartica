@@ -51,6 +51,7 @@ app.post('/listener', (req, res) => {
     if (parsed.mode == "turn") {
         turn++
     }
+    res.send('OK');
 });
 
 app.listen(PORT, () => {
