@@ -22,8 +22,6 @@ app.use(function(req, res, next) {
     // handle OPTIONS method
     if (req.method == 'OPTIONS') {
         return res.sendStatus(200);
-    } else {
-        next();
     }
 });
 
