@@ -22,6 +22,8 @@ app.use(function(req, res, next) {
     // handle OPTIONS method
     if (req.method == 'OPTIONS') {
         return res.sendStatus(200);
+    } else {
+        next();
     }
 });
 
@@ -30,9 +32,8 @@ app.post('/listener', (req, res) => {
     var parsed = req.body;
     if (parsed.mode == "participant") {
         participants.push(parsed.content)
-        res.send("Participant" + parsed.content + "added!")
         if (participants.indexOf("boris") > -1 && participants.indexOf("antonina") > -1 && participants.indexOf("felix") > -1 && participants.indexOf("juan") > -1 && participants.indexOf("kelly") > -1) {
-            res.send("game_start")
+            return res.send("game_start")
         }
     }
     if (parsed.mode == "correct_answers") {
@@ -41,15 +42,15 @@ app.post('/listener', (req, res) => {
     }
     if (parsed.mode == "guess") {
         if (parsed.content == correct_answers[turn]) {
-            res.send("correct")
+            return res.send("correct")
         } else {
-            res.send("incorrect")
+            return res.send("incorrect")
         }
     }
     if (parsed.mode == "turn") {
         turn++
     }
-    res.send('OK');
+    return res.send('OK');
 });
 
 app.listen(PORT, () => {
