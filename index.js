@@ -68,8 +68,7 @@ app.post('/listener', (req, res) => {
         if (!game_init) {
             game_init = true;
             return res.send("game_init")
-        } else if (!infosent) {
-            infosent = true;
+        } else {
             return res.send({"image_order": image_order, "correct_answers": correct_answers})
         }
     }
@@ -78,10 +77,12 @@ app.post('/listener', (req, res) => {
         image_order = [];
         turn = 0;
         participants = [];
+        game_init = false;
         return res.send("Reset successful!")
-    } else {
-        return res.send('OK');
     }
+
+    return res.send('OK');
+    
 });
 
 app.listen(PORT, () => {
