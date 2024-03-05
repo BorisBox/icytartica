@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 app.get('/readscores', (req, res) => {
-    return res.sendStatus(200).send(scores);
+    return res.send("All good");
 });
 
 var correct_answers = [];
@@ -60,6 +60,9 @@ app.post('/listener', (req, res) => {
                 return res.send("game_start")
             }
         }
+    }
+    else if (parsed.mode == "score") {
+        return res.send(scores)
     }
     else if (parsed.mode == "correct_answers") {
         correct_answers = parsed.content.split(",");
