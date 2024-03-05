@@ -95,11 +95,28 @@ app.post('/listener', (req, res) => {
         }
     }
     else if (parsed.mode == "reset") {
+        game_init = false;
+        turn = 0;
         correct_answers = [];
         image_order = [];
-        turn = 0;
         participants = [];
-        game_init = false;
+        var scores = [
+            {
+                "score": 0
+            },
+            {
+                "score": 0
+            },
+            {
+                "score": 0
+            },
+            {
+                "score": 0
+            },
+            {
+                "score": 0
+            },
+        ]
         return res.send("Reset successful!")
     }
 
