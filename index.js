@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 app.get('/readscores', (req, res) => {
-    return res.send(scores);
+    return res.sendStatus(200).send(scores);
 });
 
 var correct_answers = [];
