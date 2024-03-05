@@ -80,7 +80,6 @@ app.post('/listener', (req, res) => {
         participants = [];
         return res.send("Reset successful!")
     }
-    return res.send('OK');
 });
 
 app.listen(PORT, () => {
