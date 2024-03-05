@@ -54,7 +54,11 @@ app.post('/listener', (req, res) => {
     if (parsed.mode == "turn") {
         turn++
     }
-
+    if (parsed.mode == "ping") {
+        if (participants.indexOf("boris") > -1 && participants.indexOf("antonina") > -1 && participants.indexOf("felix") > -1 && participants.indexOf("juan") > -1 && participants.indexOf("kelly") > -1) {
+            return res.send("game_start")
+        }
+    }
     if (parsed.mode == "reset") {
         correct_answers = [];
         turn = 0;
