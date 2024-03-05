@@ -51,6 +51,13 @@ app.post('/listener', (req, res) => {
     if (parsed.mode == "turn") {
         turn++
     }
+
+    if (parsed.mode == "reset") {
+        correct_answers = [];
+        turn = 0;
+        participants = [];
+        return res.send("Reset successful!")
+    }
     return res.send('OK');
 });
 
