@@ -70,7 +70,7 @@ app.post('/listener', (req, res) => {
     }
     else if (parsed.mode == "guess") {
         if (parsed.content == correct_answers[turn]) {
-            scores[parseInt(parsed.guesser)].score = scores[parseInt(parsed.guesser)].score++
+            scores[parseInt(parsed.guesser)].score = scores[parseInt(parsed.guesser)].score + 1;
             return res.send("correct")
         } else {
             return res.send("incorrect")
