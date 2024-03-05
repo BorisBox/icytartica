@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.send('All good :)');
+    res.send(scores);
 });
 
 var correct_answers = [];
@@ -15,7 +15,7 @@ var image_order = [];
 var turn = 0;
 var participants = [];
 var game_init = false;
-var infosent = false;
+
 
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -29,6 +29,24 @@ app.use(function(req, res, next) {
         next();
     }
 });
+
+var scores = [
+    {
+        "score": 0
+    },
+    {
+        "score": 0
+    },
+    {
+        "score": 0
+    },
+    {
+        "score": 0
+    },
+    {
+        "score": 0
+    },
+]
 
 app.post('/listener', (req, res) => {
     console.log('Received Webhook');
@@ -49,6 +67,7 @@ app.post('/listener', (req, res) => {
     }
     else if (parsed.mode == "guess") {
         if (parsed.content == correct_answers[turn]) {
+            scores[parsed.guesser] = scores[parsed.guesser]++
             return res.send("correct")
         } else {
             return res.send("incorrect")
