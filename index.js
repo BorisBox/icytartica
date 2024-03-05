@@ -43,25 +43,25 @@ app.post('/listener', (req, res) => {
             }
         }
     }
-    if (parsed.mode == "correct_answers") {
+    else if (parsed.mode == "correct_answers") {
         correct_answers = parsed.content.split(",");
         console.log("Received correct answers!")
     }
-    if (parsed.mode == "guess") {
+    else if (parsed.mode == "guess") {
         if (parsed.content == correct_answers[turn]) {
             return res.send("correct")
         } else {
             return res.send("incorrect")
         }
     }
-    if (parsed.mode == "turn") {
+    else if (parsed.mode == "turn") {
         turn++
     }
-    if (parsed.mode == "image_order") {
+    else if (parsed.mode == "image_order") {
         image_order = parsed.content.split(",");
         console.log("Received correct order!")
     }
-    if (parsed.mode == "ping") {
+    else if (parsed.mode == "ping") {
         if (participants.indexOf("boris") > -1 && participants.indexOf("antonina") > -1 && participants.indexOf("felix") > -1 && participants.indexOf("juan") > -1 && participants.indexOf("kelly") > -1) {
             return res.send("game_start")
         }
@@ -73,12 +73,14 @@ app.post('/listener', (req, res) => {
             return res.send({"image_order": image_order, "correct_answers": correct_answers})
         }
     }
-    if (parsed.mode == "reset") {
+    else if (parsed.mode == "reset") {
         correct_answers = [];
         image_order = [];
         turn = 0;
         participants = [];
         return res.send("Reset successful!")
+    } else {
+        return res.send('OK');
     }
 });
 
