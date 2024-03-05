@@ -31,9 +31,10 @@ app.post('/listener', (req, res) => {
     console.log('Received Webhook');
     var parsed = req.body;
     if (parsed.mode == "participant") {
-        participants.push(parsed.content)
         if (participants.indexOf("boris") > -1 && participants.indexOf("antonina") > -1 && participants.indexOf("felix") > -1 && participants.indexOf("juan") > -1 && participants.indexOf("kelly") > -1) {
             return res.send("game_start")
+        } else {
+            participants.push(parsed.content)
         }
     }
     if (parsed.mode == "correct_answers") {
