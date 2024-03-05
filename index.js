@@ -35,6 +35,9 @@ app.post('/listener', (req, res) => {
             return res.send("game_start")
         } else {
             participants.push(parsed.content)
+            if (participants.indexOf("boris") > -1 && participants.indexOf("antonina") > -1 && participants.indexOf("felix") > -1 && participants.indexOf("juan") > -1 && participants.indexOf("kelly") > -1) {
+                return res.send("game_start")
+            }
         }
     }
     if (parsed.mode == "correct_answers") {
