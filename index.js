@@ -11,8 +11,11 @@ app.get('/', (req, res) => {
 });
 
 var correct_answers = [];
+var image_order = [];
 var turn = 0;
 var participants = [];
+var game_init = false;
+var infosent = false;
 
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -54,13 +57,27 @@ app.post('/listener', (req, res) => {
     if (parsed.mode == "turn") {
         turn++
     }
+    if (parsed.mode == "image_order") {
+        image_order = parsed.content.split(",");
+        console.log("Received correct order!")
+    }
     if (parsed.mode == "ping") {
         if (participants.indexOf("boris") > -1 && participants.indexOf("antonina") > -1 && participants.indexOf("felix") > -1 && participants.indexOf("juan") > -1 && participants.indexOf("kelly") > -1) {
             return res.send("game_start")
         }
+        if (!game_init) {
+            game_init = true;
+            return res.send("game_init")
+        } else {
+            if (!infosent) {
+                infosent = true;
+                return res.send({"image_order": image_order, "correct_answers": correct_answers})
+            }
+        }
     }
     if (parsed.mode == "reset") {
         correct_answers = [];
+        image_order = [];
         turn = 0;
         participants = [];
         return res.send("Reset successful!")
