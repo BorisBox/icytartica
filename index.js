@@ -68,11 +68,9 @@ app.post('/listener', (req, res) => {
         if (!game_init) {
             game_init = true;
             return res.send("game_init")
-        } else {
-            if (!infosent) {
-                infosent = true;
-                return res.send({"image_order": image_order, "correct_answers": correct_answers})
-            }
+        } else if (!infosent) {
+            infosent = true;
+            return res.send({"image_order": image_order, "correct_answers": correct_answers})
         }
     }
     if (parsed.mode == "reset") {
