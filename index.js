@@ -54,7 +54,7 @@ app.post('/listener', (req, res) => {
             scores[parsed.guesser].score = scores[parsed.guesser].score + 1;
         } else {}
         how_many_guessed++
-        return res.send(how_many_guessed)
+        return res.send(JSON.stringify({"how_many_guessed": how_many_guessed}))
     }
     else if (parsed.mode == "turn") {
         turn++
