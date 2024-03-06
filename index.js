@@ -15,6 +15,7 @@ var image_order = [17,14,15,12,4,15,4,16,13,10,2,2,3,1,8,3,7,3,0,0,3,3,1,0,0];
 var turn = 0;
 var participants = [];
 var game_init = false;
+var how_many_guessed = 0;
 
 
 app.use(function(req, res, next) {
@@ -49,13 +50,15 @@ app.post('/listener', (req, res) => {
         return res.send(JSON.stringify(scores));
     }
     else if (parsed.mode == "guess") {
+        how_many_guessed++
         if (parsed.content) {
             scores[parseInt(parsed.guesser)].score = scores[parseInt(parsed.guesser)].score + 1;
-            return res.send("score updated")
+            return res.send(how_many_guessed)
         }
     }
     else if (parsed.mode == "turn") {
         turn++
+        how_many_guessed = 0;
     }
     else if (parsed.mode == "ping") {
         if (participants.indexOf("boris") > -1 && participants.indexOf("antonina") > -1 && participants.indexOf("felix") > -1 && participants.indexOf("juan") > -1 && participants.indexOf("kelly") > -1) {
