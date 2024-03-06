@@ -53,8 +53,8 @@ app.post('/listener', (req, res) => {
         how_many_guessed++
         if (parsed.content) {
             scores[parseInt(parsed.guesser)].score = scores[parseInt(parsed.guesser)].score + 1;
-            return res.send(how_many_guessed)
         }
+        return res.send(how_many_guessed)
     }
     else if (parsed.mode == "turn") {
         turn++
