@@ -77,7 +77,7 @@ app.post('/listener', (req, res) => {
         correct_answers = [];
         image_order = [];
         participants = [];
-        scores = [{"score": 0},{"score": 0},{"score": 0},{"score": 0},{"score": 0}];
+        scores = [{"score": 0},{"score": 0},{"score": 0},{"score": 0},{"score": 0},{"hmg": how_many_guessed}];
         return res.send("Reset successful!")
     }
 
