@@ -10,8 +10,6 @@ app.get('/readscores', (req, res) => {
     return res.send("All good");
 });
 
-var correct_answers = ["1","3","1","3","5","2","4","2","1","3","5","5","4","5","2","4","2","3","5","4","1","2","3","4","1"];
-var image_order = [17,14,15,12,4,15,4,16,13,10,2,2,3,1,8,3,7,3,0,0,3,3,1,0,0];
 var turn = 0;
 var participants = [];
 var game_init = false;
@@ -59,8 +57,6 @@ app.post('/listener', (req, res) => {
     }
     else if (parsed.mode == "turn") {
         turn++
-        how_many_guessed = 0;
-        scores[5].hmg = 0;
     }
     else if (parsed.mode == "ping") {
         if (participants.indexOf("boris") > -1 && participants.indexOf("antonina") > -1 && participants.indexOf("felix") > -1 && participants.indexOf("juan") > -1 && participants.indexOf("kelly") > -1) {
@@ -74,8 +70,6 @@ app.post('/listener', (req, res) => {
     else if (parsed.mode == "reset") {
         game_init = false;
         turn = 0;
-        correct_answers = [];
-        image_order = [];
         participants = [];
         scores = [{"score": 0},{"score": 0},{"score": 0},{"score": 0},{"score": 0},{"hmg": how_many_guessed}];
         return res.send("Reset successful!")
