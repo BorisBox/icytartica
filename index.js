@@ -31,7 +31,7 @@ app.use(function(req, res, next) {
     }
 });
 
-var scores = [{"score": 0},{"score": 0},{"score": 0},{"score": 0},{"score": 0}];
+var scores = [{"score": 0},{"score": 0},{"score": 0},{"score": 0},{"score": 0},{"hmg": how_many_guessed}];
 
 app.post('/listener', (req, res) => {
     console.log('Received Webhook');
@@ -54,11 +54,13 @@ app.post('/listener', (req, res) => {
             scores[parsed.guesser].score = scores[parsed.guesser].score + 1;
         } else {}
         how_many_guessed = parseInt(how_many_guessed) + 1;
+        scores[5].hmg = how_many_guessed;
         return res.send(JSON.stringify({"how_many_guessed": how_many_guessed}))
     }
     else if (parsed.mode == "turn") {
         turn++
         how_many_guessed = 0;
+        scores[5].hmg = 0;
     }
     else if (parsed.mode == "ping") {
         if (participants.indexOf("boris") > -1 && participants.indexOf("antonina") > -1 && participants.indexOf("felix") > -1 && participants.indexOf("juan") > -1 && participants.indexOf("kelly") > -1) {
