@@ -53,7 +53,7 @@ app.post('/listener', (req, res) => {
         if (parsed.content == "correct") {
             scores[parsed.guesser].score = scores[parsed.guesser].score + 1;
         } else {}
-        how_many_guessed++
+        how_many_guessed = parseInt(how_many_guessed) + 1;
         return res.send(JSON.stringify({"how_many_guessed": how_many_guessed}))
     }
     else if (parsed.mode == "turn") {
