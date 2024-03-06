@@ -34,7 +34,7 @@ app.use(function(req, res, next) {
 var scores = [{"score": 0},{"score": 0},{"score": 0},{"score": 0},{"score": 0}];
 
 app.post('/listener', (req, res) => {
-    console.log('Received Webhook: ' + req.body.mode);
+    console.log('Received Webhook');
     var parsed = req.body;
     if (parsed.mode == "participant") {
         if (participants.indexOf("boris") > -1 && participants.indexOf("antonina") > -1 && participants.indexOf("felix") > -1 && participants.indexOf("juan") > -1 && participants.indexOf("kelly") > -1) {
@@ -50,10 +50,10 @@ app.post('/listener', (req, res) => {
         return res.send(JSON.stringify(scores));
     }
     else if (parsed.mode == "guess") {
-        how_many_guessed++
         if (parsed.content == "correct") {
-            scores[parseInt(parsed.guesser)].score = scores[parseInt(parsed.guesser)].score + 1;
+            scores[parsed.guesser].score = scores[parsed.guesser].score + 1;
         } else {}
+        how_many_guessed++
         return res.send(how_many_guessed)
     }
     else if (parsed.mode == "turn") {
