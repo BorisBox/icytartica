@@ -10,8 +10,8 @@ app.get('/readscores', (req, res) => {
     return res.send("All good");
 });
 
-var correct_answers = [];
-var image_order = [];
+var correct_answers = ["1","3","1","3","5","2","4","2","1","3","5","5","4","5","2","4","2","3","5","4","1","2","3","4","1"];
+var image_order = [17,14,15,12,4,15,4,16,13,10,2,2,3,1,8,3,7,3,0,0,3,3,1,0,0];
 var turn = 0;
 var participants = [];
 var game_init = false;
@@ -30,26 +30,10 @@ app.use(function(req, res, next) {
     }
 });
 
-var scores = [
-    {
-        "score": 0
-    },
-    {
-        "score": 0
-    },
-    {
-        "score": 0
-    },
-    {
-        "score": 0
-    },
-    {
-        "score": 0
-    },
-]
+var scores = [{"score": 0},{"score": 0},{"score": 0},{"score": 0},{"score": 0}];
 
 app.post('/listener', (req, res) => {
-    console.log('Received Webhook');
+    console.log('Received Webhook: ' + req.body.mode);
     var parsed = req.body;
     if (parsed.mode == "participant") {
         if (participants.indexOf("boris") > -1 && participants.indexOf("antonina") > -1 && participants.indexOf("felix") > -1 && participants.indexOf("juan") > -1 && participants.indexOf("kelly") > -1) {
@@ -62,26 +46,16 @@ app.post('/listener', (req, res) => {
         }
     }
     else if (parsed.mode == "score") {
-        return res.send(scores)
-    }
-    else if (parsed.mode == "correct_answers") {
-        correct_answers = parsed.content.split(",");
-        console.log("Received correct answers!")
+        return res.send(JSON.stringify(scores));
     }
     else if (parsed.mode == "guess") {
-        if (parsed.content == correct_answers[turn]) {
+        if (parsed.content) {
             scores[parseInt(parsed.guesser)].score = scores[parseInt(parsed.guesser)].score + 1;
-            return res.send("correct")
-        } else {
-            return res.send("incorrect")
+            return res.send("score updated")
         }
     }
     else if (parsed.mode == "turn") {
         turn++
-    }
-    else if (parsed.mode == "image_order") {
-        image_order = parsed.content.split(",");
-        console.log("Received correct order!")
     }
     else if (parsed.mode == "ping") {
         if (participants.indexOf("boris") > -1 && participants.indexOf("antonina") > -1 && participants.indexOf("felix") > -1 && participants.indexOf("juan") > -1 && participants.indexOf("kelly") > -1) {
@@ -90,8 +64,6 @@ app.post('/listener', (req, res) => {
         if (!game_init) {
             game_init = true;
             return res.send("game_init")
-        } else {
-            return res.send({"image_order": image_order, "correct_answers": correct_answers})
         }
     }
     else if (parsed.mode == "reset") {
@@ -100,23 +72,7 @@ app.post('/listener', (req, res) => {
         correct_answers = [];
         image_order = [];
         participants = [];
-        var scores = [
-            {
-                "score": 0
-            },
-            {
-                "score": 0
-            },
-            {
-                "score": 0
-            },
-            {
-                "score": 0
-            },
-            {
-                "score": 0
-            },
-        ]
+        scores = [{"score": 0},{"score": 0},{"score": 0},{"score": 0},{"score": 0}];
         return res.send("Reset successful!")
     }
 
