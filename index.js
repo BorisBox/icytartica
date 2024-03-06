@@ -71,7 +71,8 @@ app.post('/listener', (req, res) => {
         game_init = false;
         turn = 0;
         participants = [];
-        scores = [{"score": 0},{"score": 0},{"score": 0},{"score": 0},{"score": 0},{"hmg": how_many_guessed}];
+        how_many_guessed = 0;
+        scores = [{"score": 0},{"score": 0},{"score": 0},{"score": 0},{"score": 0},{"hmg": 0}];
         return res.send("Reset successful!")
     }
 
