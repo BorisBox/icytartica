@@ -11,7 +11,11 @@ app.ws('/', function(ws, req) {
   console.log('Socket Connected');
 
   ws.onmessage = function(msg) {
-    console.log(msg.data);
+    if (msg.data == "ping") {
+        ws.send("pong")
+    }
+
+    // Send to all clients
     aWss.clients.forEach(function (client) {
       client.send(msg.data);
     });
