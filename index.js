@@ -13,12 +13,12 @@ app.ws('/', function(ws, req) {
   ws.onmessage = function(msg) {
     if (msg.data == "ping") {
         ws.send("pong")
+    } else {
+        // Send to all clients
+        aWss.clients.forEach(function (client) {
+          client.send(msg.data);
+        });
     }
-
-    // Send to all clients
-    aWss.clients.forEach(function (client) {
-      client.send(msg.data);
-    });
   };
 });
 
