@@ -1,18 +1,26 @@
-import { WebSocketServer } from 'ws';
+var express = require('express');
+var expressWs = require('express-ws');
+var expressWs = expressWs(express());
+var app = expressWs.app;
 
-const port = process.env.PORT || 10000;
+app.use(express.static('public'));
 
-const wss = new WebSocketServer({ port: port });
+var aWss = expressWs.getWss('/');
 
-wss.on('connection', function connection(ws) {
-  ws.on('error', console.error);
+app.ws('/', function(ws, req) {
+  console.log('Socket Connected');
 
-  ws.on('message', function message(data) {
-    console.log('received: %s', data);
-  });
-
-  ws.send('something');
+  ws.onmessage = function(msg) {
+    console.log(msg.data);
+    aWss.clients.forEach(function (client) {
+      client.send(msg.data);
+    });
+  };
 });
+
+app.listen(10000);
+
+
 //const express = require('express');
 //const bodyParser = require('body-parser');
 //
